@@ -35,15 +35,11 @@ const chargeSum = (charges: Charge[], chargeType: "self" | "ptAll" | "ptOne") =>
 };
 
 const getChargeGroup = (chargeValue: number): number => {
-    if (chargeValue >= 100) return 100;
     if (chargeValue >= 79 && chargeValue <= 80) return 79.5;
     return chargeValue;
 };
 
-const chargeGroupText = new Map([
-    [100, "100+"],
-    [79.5, "79~80"],
-]);
+const chargeGroupText = new Map([[79.5, "79~80"]]);
 
 const mapToChargeInfo = (chargeMap: ChargeInfoMap): ChargeInfo[] => {
     return Array.from(chargeMap.entries())
