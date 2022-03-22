@@ -97,6 +97,7 @@ const getServants = async (): Promise<Servant.Servant[]> => {
 const getSelfChargers = (chargers: Charger[]) => {
     const selfChargeAOE: ChargeInfoMap = new Map();
     const selfChargeST: ChargeInfoMap = new Map();
+    const selfChargeSupport: ChargeInfoMap = new Map();
     chargers
         .filter((charger) => charger.charges.some((charge) => charge.type === "self"))
         .forEach((charger) => {
@@ -115,9 +116,20 @@ const getSelfChargers = (chargers: Charger[]) => {
                 } else {
                     selfChargeST.set(chargeGroup, [charger]);
                 }
+            } else {
+                const mapValue = selfChargeSupport.get(chargeGroup);
+                if (mapValue !== undefined) {
+                    mapValue.push(charger);
+                } else {
+                    selfChargeSupport.set(chargeGroup, [charger]);
+                }
             }
         });
-    return { selfChargeAOE: mapToChargeInfo(selfChargeAOE), selfChargeST: mapToChargeInfo(selfChargeST) };
+    return {
+        selfChargeAOE: mapToChargeInfo(selfChargeAOE),
+        selfChargeST: mapToChargeInfo(selfChargeST),
+        selfChargeSupport: mapToChargeInfo(selfChargeSupport),
+    };
 };
 
 const getSupportChargers = (chargers: Charger[]) => {
@@ -171,9 +183,9 @@ const getChargers: () => Promise<CategorizedChargeInfo> = async () => {
                 : "",
         };
     });
-    const { selfChargeAOE, selfChargeST } = getSelfChargers(chargers);
+    const { selfChargeAOE, selfChargeST, selfChargeSupport } = getSelfChargers(chargers);
     const { partyCharge, allyCharge } = getSupportChargers(chargers);
-    return { chargers, selfChargeAOE, selfChargeST, selfChargeSupport: [], partyCharge, allyCharge };
+    return { chargers, selfChargeAOE, selfChargeST, selfChargeSupport, partyCharge, allyCharge };
 };
 
 export default getChargers;

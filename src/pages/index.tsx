@@ -35,6 +35,9 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <Tab title="Self Charge ST" eventKey="self-charge-st">
                     <ChargerTable chargeInfos={selfChargeST} />
                 </Tab>
+                <Tab title="Self Charge Support NP" eventKey="self-charge-support">
+                    <ChargerTable chargeInfos={selfChargeSupport} />
+                </Tab>
                 <Tab title="Targeted &amp; Party Chargers" eventKey="targeted-party-chargers">
                     <ChargerTable chargeInfos={partyCharge} />
                     <ChargerTable chargeInfos={allyCharge} />
