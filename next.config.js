@@ -1,3 +1,3 @@
 module.exports = {
-    basePath: "/chargers",
+    basePath: "/fgo-chargers",
 };
