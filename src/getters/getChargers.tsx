@@ -13,10 +13,11 @@ export interface Charger {
     np: string;
 }
 
-type ChargeInfoMap = Map<string, Charger[]>;
+type ChargeInfoMap = Map<number, Charger[]>;
 
 export interface ChargeInfo {
-    chargeValue: string;
+    chargeText: string;
+    chargeValue: number;
     chargers: Charger[];
 }
 
@@ -33,10 +34,23 @@ const chargeSum = (charges: Charge[], chargeType: "self" | "ptAll" | "ptOne") =>
     return charges.reduce((acc, charge) => (acc += charge.type === chargeType ? charge.value : 0), 0);
 };
 
-const mapToChargeInfo = (chargeMap: Map<string, Charger[]>): ChargeInfo[] => {
-    return Array.from(chargeMap.entries()).map(([chargeValue, chargers]) => {
-        return { chargeValue, chargers };
-    });
+const getChargeGroup = (chargeValue: number): number => {
+    if (chargeValue >= 100) return 100;
+    if (chargeValue >= 79 && chargeValue <= 80) return 79.5;
+    return chargeValue;
+};
+
+const chargeGroupText = new Map([
+    [100, "100+"],
+    [79.5, "79~80"],
+]);
+
+const mapToChargeInfo = (chargeMap: ChargeInfoMap): ChargeInfo[] => {
+    return Array.from(chargeMap.entries())
+        .map(([chargeValue, chargers]) => {
+            return { chargeValue, chargeText: chargeGroupText.get(chargeValue) ?? chargeValue.toString(), chargers };
+        })
+        .sort((a, b) => a.chargeValue - b.chargeValue);
 };
 
 const getCharges = (_skills: Skill.Skill[]): Charge[] => {
@@ -86,26 +100,20 @@ const getSelfChargers = (chargers: Charger[]) => {
     chargers
         .filter((charger) => charger.charges.some((charge) => charge.type === "self"))
         .forEach((charger) => {
-            const chargeValue = chargeSum(charger.charges, "self");
+            const chargeGroup = getChargeGroup(chargeSum(charger.charges, "self"));
             if (charger.np === "enemyAll") {
-                const valText = [79.5, 80].includes(chargeValue)
-                    ? "79~80"
-                    : chargeValue > 100
-                    ? "100+"
-                    : chargeValue.toString();
-                const mapValue = selfChargeAOE.get(valText);
+                const mapValue = selfChargeAOE.get(chargeGroup);
                 if (mapValue !== undefined) {
                     mapValue.push(charger);
                 } else {
-                    selfChargeAOE.set(valText, [charger]);
+                    selfChargeAOE.set(chargeGroup, [charger]);
                 }
             } else if (charger.np === "enemy") {
-                const valText = chargeValue > 100 ? "100+" : chargeValue.toString();
-                const mapValue = selfChargeST.get(valText);
+                const mapValue = selfChargeST.get(chargeGroup);
                 if (mapValue !== undefined) {
                     mapValue.push(charger);
                 } else {
-                    selfChargeST.set(valText, [charger]);
+                    selfChargeST.set(chargeGroup, [charger]);
                 }
             }
         });
@@ -117,13 +125,12 @@ const getSupportChargers = (chargers: Charger[]) => {
     chargers
         .filter((charger) => charger.charges.some((charge) => charge.type === "ptAll"))
         .forEach((charger) => {
-            const chargeValue = chargeSum(charger.charges, "ptAll");
-            const valText = chargeValue.toString();
-            const mapValue = partyCharge.get(valText);
+            const chargeGroup = getChargeGroup(chargeSum(charger.charges, "ptAll"));
+            const mapValue = partyCharge.get(chargeGroup);
             if (mapValue !== undefined) {
                 mapValue.push(charger);
             } else {
-                partyCharge.set(valText, [charger]);
+                partyCharge.set(chargeGroup, [charger]);
             }
         });
 
@@ -131,13 +138,12 @@ const getSupportChargers = (chargers: Charger[]) => {
     chargers
         .filter((charger) => charger.charges.some((charge) => charge.type === "ptOne"))
         .forEach((charger) => {
-            const chargeValue = chargeSum(charger.charges, "ptOne");
-            const valText = chargeValue > 100 ? "100+" : chargeValue.toString();
-            const mapValue = allyCharge.get(valText);
+            const chargeGroup = getChargeGroup(chargeSum(charger.charges, "ptOne"));
+            const mapValue = allyCharge.get(chargeGroup);
             if (mapValue !== undefined) {
                 mapValue.push(charger);
             } else {
-                allyCharge.set(valText, [charger]);
+                allyCharge.set(chargeGroup, [charger]);
             }
         });
 

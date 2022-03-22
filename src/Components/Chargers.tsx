@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 
-import { ChargeInfo, Charger } from "../getters/getChargers";
+import { ChargeInfo } from "../getters/getChargers";
 
 export const ChargerTable = ({ chargeInfos }: { chargeInfos?: ChargeInfo[] }) => {
     if (chargeInfos === undefined) return null;
@@ -9,10 +9,10 @@ export const ChargerTable = ({ chargeInfos }: { chargeInfos?: ChargeInfo[] }) =>
     return (
         <Table striped bordered hover variant="dark">
             <tbody>
-                {chargeInfos.map(({ chargeValue, chargers }) => (
+                {chargeInfos.map(({ chargeValue, chargeText, chargers }) => (
                     <tr key={chargeValue} className="border border-white">
                         <td className="align-middle text-center">
-                            <b className="sticky-top h1">{chargeValue}</b>
+                            <b className="sticky-top h1">{chargeText}</b>
                         </td>
                         <td className="p-0">
                             {chargers.map((charger) => (
