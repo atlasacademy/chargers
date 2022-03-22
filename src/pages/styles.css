@@ -32,7 +32,7 @@ div#__next {
     border-right: 2px solid white !important;
 }
 img {
-    /* transform: translateX(1%); */
+    height: auto;
 }
 /* Monitors only */
 @media (min-width: 991.98px) {
