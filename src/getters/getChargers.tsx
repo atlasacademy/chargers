@@ -51,8 +51,12 @@ const mapToChargeInfo = (chargeMap: ChargeInfoMap): ChargeInfo[] => {
 
 const getCharges = (_skills: Skill.Skill[]): Charge[] => {
     const skills = _skills.slice();
-    skills.forEach((skill) => (skills[skill.num! - 1] = skill));
-    const skillFuncs = skills.slice(0, 3).map((skill) => skill.functions.find((func) => func.funcType === "gainNp"));
+    skills.forEach((skill) => {
+        skills[skill.num! - 1] = skill;
+    });
+    const skillFuncs = skills
+        .slice(0, 3)
+        .flatMap((skill) => skill.functions.filter((func) => func.funcType === "gainNp"));
     const charges = skillFuncs.map((func) => {
         let value = func && func.functvals.length === 0 ? func.svals[9].Value! / 100 : 0;
         let type = func?.funcTargetType && value ? func.funcTargetType : "";
@@ -148,23 +152,25 @@ const getSupportChargers = (chargers: Charger[]) => {
 
 const getChargers: () => Promise<CategorizedChargeInfo> = async () => {
     const servants = await getServants();
-    const chargers = servants.map((servant) => ({
-        charges: getCharges(servant.skills),
-        id: servant.id,
-        img: servant.extraAssets.faces.ascension?.[1]
-            ? `${servant.extraAssets.faces.ascension?.[1].split(".png")[0]}_bordered.png`
-            : "",
-        name: `${servant.name ?? ""} (${
-            servant.className ? `${servant.className[0].toUpperCase()}${servant.className.slice(1)}` : ""
-        })`,
-        np: servant.noblePhantasms[servant.noblePhantasms.length - 1]?.functions.some((func) =>
-            func.funcType.includes("damageNp")
-        )
-            ? servant.noblePhantasms[servant.noblePhantasms.length - 1]?.functions.filter((func) =>
-                  func.funcType.includes("damageNp")
-              )[0].funcTargetType
-            : "",
-    }));
+    const chargers = servants.map((servant) => {
+        return {
+            charges: getCharges(servant.skills),
+            id: servant.id,
+            img: servant.extraAssets.faces.ascension?.[1]
+                ? `${servant.extraAssets.faces.ascension?.[1].split(".png")[0]}_bordered.png`
+                : "",
+            name: `${servant.name ?? ""} (${
+                servant.className ? `${servant.className[0].toUpperCase()}${servant.className.slice(1)}` : ""
+            })`,
+            np: servant.noblePhantasms[servant.noblePhantasms.length - 1]?.functions.some((func) =>
+                func.funcType.includes("damageNp")
+            )
+                ? servant.noblePhantasms[servant.noblePhantasms.length - 1]?.functions.filter((func) =>
+                      func.funcType.includes("damageNp")
+                  )[0].funcTargetType
+                : "",
+        };
+    });
     const { selfChargeAOE, selfChargeST } = getSelfChargers(chargers);
     const { partyCharge, allyCharge } = getSupportChargers(chargers);
     return { chargers, selfChargeAOE, selfChargeST, selfChargeSupport: [], partyCharge, allyCharge };
