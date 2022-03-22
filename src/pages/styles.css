@@ -27,6 +27,13 @@ a {
 div#__next {
     background-color: #323539;
 }
+#charger-tabs-tabpane-self-charge-aoe > table:nth-child(1) > tbody:nth-child(1) > tr > td:first-child,
+#charger-tabs-tabpane-self-charge-st > table:nth-child(1) > tbody:nth-child(1) > tr > td:first-child {
+    border-right: 2px solid white !important;
+}
+img {
+    /* transform: translateX(1%); */
+}
 /* Monitors only */
 @media (min-width: 991.98px) {
     div#__next {
