@@ -20,12 +20,12 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     return (
         <>
             <Head>
-                <link rel="icon" href="./npbattery.ico" />
+                <link rel="icon" href="/chargers/npbattery.ico" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="theme-color" content="#000000" />
                 <meta name="description" content="NP Gauge Chargers - Fate/Grand Order" />
-                <link rel="apple-touch-icon" href="./npbattery.ico" />
-                <link rel="manifest" href="./manifest.json" />
+                <link rel="apple-touch-icon" href="/chargers/npbattery.ico" />
+                <link rel="manifest" href="/chargers/manifest.json" />
                 <title>FGO NP Chargers</title>
             </Head>
             <Tabs id="charger-tabs">
