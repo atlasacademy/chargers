@@ -74,22 +74,32 @@ const getServants = async (): Promise<Servant.Servant[]> => {
     servants.find((serv) => serv.id === 1000900)!.noblePhantasms = []; // Kingprotea
 
     const melu = { ...servants.find((serv) => serv.id === 304800)! };
-    const [meluNPAsc12, meluNpAsc3] = melu.noblePhantasms;
-    const [meluSkill1, meluSkill2, meluSkill3Asc12, meluSkill3Asc3] = melu.skills;
-    servants.find((serv) => serv.id === 304800)!.noblePhantasms = [];
-    servants.find((serv) => serv.id === 304800)!.skills = [];
-    servants.push(
+    const [meluNpST, meluNpAOE] = melu.noblePhantasms;
+    const [meluSkill1, meluSkill2, meluBattery100, meluBattery30] = melu.skills;
+    const [melu1, melu2, melu3] = [
         {
+            /* In asc1, Melusine can charge only 30% (since the 100% battery changes her ascension to asc3) */
             ...melu,
-            noblePhantasms: [meluNpAsc3],
-            skills: [meluSkill1, meluSkill2, meluSkill3Asc3],
+            noblePhantasms: [meluNpST],
+            skills: [meluSkill1, meluSkill2, meluBattery30],
         },
         {
+            /* If Melusine starts with asc3, the battery is locked to her and she can only use ...skills[3] */
             ...melu,
-            noblePhantasms: [meluNPAsc12],
-            skills: [meluSkill1, meluSkill2, meluSkill3Asc12],
-        }
-    );
+            noblePhantasms: [meluNpAOE],
+            skills: [meluSkill1, meluSkill2, meluBattery30],
+            extraAssets: { ...melu.extraAssets, faces: { ascension: { 1: melu.extraAssets.faces.ascension!["3"] } } },
+        },
+        {
+            /* If starting in asc1, Melusine can use her 100% battery and change ascensions to asc3, which functionally means the 100% charge is on asc3 */
+            ...melu,
+            noblePhantasms: [meluNpAOE],
+            skills: [meluSkill1, meluSkill2, meluBattery100],
+            extraAssets: { ...melu.extraAssets, faces: { ascension: { 1: melu.extraAssets.faces.ascension!["3"] } } },
+        },
+    ];
+
+    servants.splice(servants.indexOf(servants.find((serv) => serv.id === 304800)!), 1, melu1, melu2, melu3);
 
     return servants;
 };
