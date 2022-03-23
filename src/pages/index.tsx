@@ -1,7 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import React from "react";
-import { Tab, Tabs } from "react-bootstrap";
+import { Alert, Tab, Tabs } from "react-bootstrap";
 
 import { ChargerTable } from "../Components/Chargers";
 import getChargers, { CategorizedChargeInfo } from "../getters/getChargers";
@@ -31,9 +31,29 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             <Tabs id="charger-tabs">
                 <Tab title="Self Charge AOE" eventKey="self-charge-aoe">
                     <ChargerTable chargeInfos={selfChargeAOE} />
+                    <Alert className="w-100 mt-1 mb-10" variant="dark">
+                        <Alert.Heading>On Melusine&apos;s charges</Alert.Heading>
+                        <hr />
+                        <p>
+                            In asc1, Melusine can charge only 30% (since the 100% battery changes her ascension to
+                            asc3). If Melusine starts with asc3, her battery is locked and only the npmod skill is
+                            available. If starting in asc1, Melusine can use her 100% battery and change ascensions to
+                            asc3, which functionally means the 100% charge is on asc3.
+                        </p>
+                    </Alert>
                 </Tab>
                 <Tab title="Self Charge ST" eventKey="self-charge-st">
                     <ChargerTable chargeInfos={selfChargeST} />
+                    <Alert className="w-100 mt-1 mb-10" variant="dark">
+                        <Alert.Heading>On Melusine&apos;s charges</Alert.Heading>
+                        <hr />
+                        <p>
+                            In asc1, Melusine can charge only 30% (since the 100% battery changes her ascension to
+                            asc3). If Melusine starts with asc3, her battery is locked and only the npmod skill is
+                            available. If starting in asc1, Melusine can use her 100% battery and change ascensions to
+                            asc3, which functionally means the 100% charge is on asc3.
+                        </p>
+                    </Alert>
                 </Tab>
                 <Tab title="Self Charge Support NP" eventKey="self-charge-support">
                     <ChargerTable chargeInfos={selfChargeSupport} />
