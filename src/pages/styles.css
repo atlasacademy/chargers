@@ -74,11 +74,17 @@ img {
     img {
         width: 100px;
     }
+    #charger-tabs-tabpane-self-charge-support {
+        width: unset;
+    }
 }
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
     img {
         width: 80px;
+    }
+    #charger-tabs-tabpane-self-charge-support {
+        width: unset;
     }
 }
