@@ -21,9 +21,6 @@ a {
     width: 160px;
     margin-bottom: 1px;
 }
-.nav-tabs {
-    border: 0 !important;
-}
 div#__next {
     background-color: #323539;
 }
@@ -36,6 +33,22 @@ div#__next {
 }
 img {
     height: auto;
+}
+#charger-tabs-tabpane-targeted-party-chargers
+    > table.table.table-dark.table-striped.table-bordered.table-hover:nth-child(1):before {
+    content: "Party";
+    margin-left: 50%;
+    color: gainsboro;
+    font-size: xx-large;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+#charger-tabs-tabpane-targeted-party-chargers
+    > table.table.table-dark.table-striped.table-bordered.table-hover:nth-child(2):before {
+    content: "Ally";
+    margin-left: 50%;
+    color: gainsboro;
+    font-size: xx-large;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 /* Monitors only */
 @media (min-width: 991.98px) {
