@@ -31,29 +31,9 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
             <Tabs id="charger-tabs">
                 <Tab title="Self Charge AOE" eventKey="self-charge-aoe">
                     <ChargerTable chargeInfos={selfChargeAOE} />
-                    <Alert className="w-100 mt-1 mb-10" variant="dark">
-                        <Alert.Heading>On Melusine&apos;s charges</Alert.Heading>
-                        <hr />
-                        <p>
-                            In asc1, Melusine can charge only 30% (since the 100% battery changes her ascension to
-                            asc3). If Melusine starts with asc3, her battery is locked and only the npmod skill is
-                            available. If starting in asc1, Melusine can use her 100% battery and change ascensions to
-                            asc3, which functionally means the 100% charge is on asc3.
-                        </p>
-                    </Alert>
                 </Tab>
                 <Tab title="Self Charge ST" eventKey="self-charge-st">
                     <ChargerTable chargeInfos={selfChargeST} />
-                    <Alert className="w-100 mt-1 mb-10" variant="dark">
-                        <Alert.Heading>On Melusine&apos;s charges</Alert.Heading>
-                        <hr />
-                        <p>
-                            In asc1, Melusine can charge only 30% (since the 100% battery changes her ascension to
-                            asc3). If Melusine starts with asc3, her battery is locked and only the npmod skill is
-                            available. If starting in asc1, Melusine can use her 100% battery and change ascensions to
-                            asc3, which functionally means the 100% charge is on asc3.
-                        </p>
-                    </Alert>
                 </Tab>
                 <Tab title="Self Charge Support NP" eventKey="self-charge-support">
                     <ChargerTable chargeInfos={selfChargeSupport} />
@@ -61,6 +41,24 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <Tab title="Targeted &amp; Party Chargers" eventKey="targeted-party-chargers">
                     <ChargerTable chargeInfos={partyCharge} />
                     <ChargerTable chargeInfos={allyCharge} />
+                </Tab>
+                <Tab title="Notes" eventKey="notes">
+                    <Alert className="w-100 mt-1 mb-10" variant="dark">
+                        <Alert.Heading>On Melusine&apos;s charges</Alert.Heading>
+                        <hr />
+                        <p>
+                            In asc1, Melusine can charge only 30% (since the 100% battery changes her ascension to
+                            asc3). If Melusine starts with asc3, her battery is locked and only the npmod skill is
+                            available. If starting in asc1, Melusine can use her 100% battery and change ascensions to
+                            asc3, which functionally means the 100% charge is on asc3.
+                        </p>
+                        <Alert.Heading>Charge-per-turn buffs and trait charges</Alert.Heading>
+                        <hr />
+                        <p>
+                            Only on-demand battery are listed, charge-per-turn (like Cleopatra&apos;s) and conditional
+                            charges (like Summer Kiara&apos;s or Kingprotea&apos;s) are not included.
+                        </p>
+                    </Alert>
                 </Tab>
             </Tabs>
         </>
