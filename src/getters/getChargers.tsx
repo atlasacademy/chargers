@@ -99,7 +99,26 @@ const getServants = async (): Promise<Servant.Servant[]> => {
         },
     ];
 
-    servants.splice(servants.indexOf(servants.find((serv) => serv.id === 304800)!), 1, melu1, melu2, melu3);
+    servants.splice(servants.indexOf(servants.find((serv) => serv.id === melu.id)!), 1, melu1, melu2, melu3);
+
+    const mash = { ...servants.find((serv) => serv.id === 800100)! };
+
+    const [mashOG, mashOrtenaus] = [
+        {
+            ...mash,
+            skills: [mash.skills[0], mash.skills[1], mash.skills[2]],
+            extraAssets: { ...mash.extraAssets, faces: { ascension: { 1: mash.extraAssets.faces.ascension!["4"] } } },
+        },
+        {
+            ...mash,
+            extraAssets: {
+                ...mash.extraAssets,
+                faces: { ascension: { 1: mash.extraAssets.faces.costume!["800140"] } },
+            },
+        },
+    ];
+
+    servants.splice(servants.indexOf(servants.find((serv) => serv.id === mash.id)!), 1, mashOG, mashOrtenaus);
 
     return servants;
 };
