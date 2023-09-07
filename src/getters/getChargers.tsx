@@ -11,6 +11,7 @@ export interface Charger {
     img: string;
     name: string;
     np: string;
+    region: "JP" | "CN" | "TW" | "KR" | "NA";
 }
 
 type ChargeInfoMap = Map<number, Charger[]>;
@@ -66,9 +67,9 @@ const getCharges = (_skills: Skill.Skill[]): Charge[] => {
     return charges;
 };
 
-const getServants = async (): Promise<Servant.Servant[]> => {
+const getServants = async (region: "JP"|"CN"|"TW"|"KR"|"NA" = "JP"): Promise<Servant.Servant[]> => {
     const servants: Servant.Servant[] = await (
-        await fetch("https://api.atlasacademy.io/export/JP/nice_servant_lang_en.json")
+        await fetch(`https://api.atlasacademy.io/export/${region}/${region === "JP" ? "nice_servant_lang_en" : "nice_servant"}.json`)
     ).json();
 
     servants.find((serv) => serv.id === 1000900)!.noblePhantasms = []; // Kingprotea
@@ -191,8 +192,8 @@ const getSupportChargers = (chargers: Charger[]) => {
     return { partyCharge: mapToChargeInfo(partyCharge), allyCharge: mapToChargeInfo(allyCharge) };
 };
 
-const getChargers: () => Promise<CategorizedChargeInfo> = async () => {
-    const servants = await getServants();
+const getChargers: (region?: "JP"|"CN"|"TW"|"KR"|"NA") => Promise<CategorizedChargeInfo> = async (region: "JP"|"CN"|"TW"|"KR"|"NA" = "JP") => {
+    const servants = await getServants(region);
     const chargers = servants.map((servant) => {
         return {
             charges: getCharges(servant.skills),
@@ -210,6 +211,7 @@ const getChargers: () => Promise<CategorizedChargeInfo> = async () => {
                       func.funcType.includes("damageNp")
                   )[0].funcTargetType
                 : "",
+            region
         };
     });
     const { selfChargeAOE, selfChargeST, selfChargeSupport } = getSelfChargers(chargers);
