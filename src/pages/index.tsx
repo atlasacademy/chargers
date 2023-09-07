@@ -1,7 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import React from "react";
-import { Alert, Tab, Tabs } from "react-bootstrap";
+import React, { useState } from "react";
+import { Alert, Col, Container, Nav, Navbar, Row, Tab, Tabs } from "react-bootstrap";
 
 import { ChargerTable } from "../Components/Chargers";
 import getChargers, { CategorizedChargeInfo } from "../getters/getChargers";
@@ -9,13 +9,36 @@ import getChargers, { CategorizedChargeInfo } from "../getters/getChargers";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    return { props: await getChargers() };
+    return { props:
+        { chargers: 
+            {
+                JP: await getChargers("JP"),
+                NA: await getChargers("NA"),
+            }
+        }
+    };
 };
 
 const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const { chargers, selfChargeAOE, selfChargeST, selfChargeSupport, partyCharge, allyCharge }: CategorizedChargeInfo =
-        props.pageProps;
+    const [region, setRegion] = useState<"JP"|"CN"|"TW"|"KR"|"NA">("JP");
+
+    const chargersProps = props.pageProps.chargers;
+    const [tabActiveKey, setKey] = useState<"self-charge-aoe"|"self-charge-st"|"self-charge-support"|"targeted-party-chargers"|"notes"|"region-NA"|"region-JP">("self-charge-aoe");
+
+    if (chargersProps === undefined) return null;
+
+    let { chargers, selfChargeAOE, selfChargeST, selfChargeSupport, partyCharge, allyCharge }: CategorizedChargeInfo =
+        chargersProps[region];
+    
     if (chargers === undefined) return null;
+
+    const tabSelector = (selectedKey: "self-charge-aoe"|"self-charge-st"|"self-charge-support"|"targeted-party-chargers"|"notes"|"NA"|"JP") => {
+        if (selectedKey === "NA" || selectedKey === "JP") {
+            setRegion(selectedKey);
+        } else {
+            setKey(selectedKey)
+        }
+    };
 
     return (
         <>
@@ -28,7 +51,7 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <link rel="manifest" href="/chargers/manifest.json" />
                 <title>FGO NP Chargers</title>
             </Head>
-            <Tabs id="charger-tabs">
+            <Tabs id="charger-tabs" activeKey={tabActiveKey} onSelect={(k) => tabSelector(k as unknown as "self-charge-aoe" | "self-charge-st" | "self-charge-support" | "targeted-party-chargers" | "notes" | "NA" | "JP")}>
                 <Tab title="Self Charge AOE" eventKey="self-charge-aoe">
                     <ChargerTable chargeInfos={selfChargeAOE} />
                 </Tab>
@@ -60,6 +83,8 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                         </p>
                     </Alert>
                 </Tab>
+                <Tab title="🇯🇵" eventKey="JP" tabClassName={(region === "JP" ? "active-region" : "")} />
+                <Tab title="🇺🇸" eventKey="NA" tabClassName={(region === "NA" ? "active-region" : "")} />
             </Tabs>
         </>
     );

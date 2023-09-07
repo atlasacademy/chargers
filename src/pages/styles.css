@@ -9,6 +9,9 @@ body {
 a {
     margin: -2px;
 }
+.nav.nav-tabs {
+    position: relative;
+}
 .nav.nav-tabs .nav-link.active {
     background-color: #fff !important;
     color: #495057;
@@ -20,6 +23,19 @@ a {
     height: 60px;
     width: 160px;
     margin-bottom: 1px;
+}
+.active-region {
+    border: 2px solid gainsboro !important;
+}
+li:nth-last-child(1) {
+    position: absolute;
+    right: 0;
+
+}
+li:nth-last-child(2) {
+    position: absolute;
+    right: 0;
+    transform: translateX(-100%);
 }
 div#__next {
     background-color: #323539;
