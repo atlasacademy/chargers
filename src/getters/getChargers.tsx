@@ -32,8 +32,7 @@ export interface CategorizedChargeInfo {
 }
 
 const chargeSum = (charges: Charge[], chargeType: "self" | "ptAll" | "ptOne") => {
-    charge.type = (charge.type === "ptOther" ? "ptAll" : charge.type);
-    return charges.reduce((acc, charge) => (acc += charge.type === chargeType ? charge.value : 0), 0);
+    return charges.reduce((acc, charge) => (acc += (charge.type === "ptOther" ? "ptAll" : charge.type) === chargeType ? charge.value : 0), 0);
 };
 
 const getChargeGroup = (chargeValue: number): number => {
