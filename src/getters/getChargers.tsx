@@ -32,6 +32,7 @@ export interface CategorizedChargeInfo {
 }
 
 const chargeSum = (charges: Charge[], chargeType: "self" | "ptAll" | "ptOne") => {
+    charge.type = (charge.type === "ptOther" ? "ptAll" : charge.type);
     return charges.reduce((acc, charge) => (acc += charge.type === chargeType ? charge.value : 0), 0);
 };
 
@@ -165,7 +166,7 @@ const getSelfChargers = (chargers: Charger[]) => {
 const getSupportChargers = (chargers: Charger[]) => {
     const partyCharge: ChargeInfoMap = new Map();
     chargers
-        .filter((charger) => charger.charges.some((charge) => charge.type === "ptAll"))
+        .filter((charger) => charger.charges.some((charge) => ["ptAll", "ptOther"].includes(charge.type))
         .forEach((charger) => {
             const chargeGroup = getChargeGroup(chargeSum(charger.charges, "ptAll"));
             const mapValue = partyCharge.get(chargeGroup);
