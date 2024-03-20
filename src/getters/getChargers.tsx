@@ -165,7 +165,7 @@ const getSelfChargers = (chargers: Charger[]) => {
 const getSupportChargers = (chargers: Charger[]) => {
     const partyCharge: ChargeInfoMap = new Map();
     chargers
-        .filter((charger) => charger.charges.some((charge) => ["ptAll", "ptOther"].includes(charge.type))
+        .filter((charger) => charger.charges.some((charge) => ["ptAll", "ptOther"].includes(charge.type)))
         .forEach((charger) => {
             const chargeGroup = getChargeGroup(chargeSum(charger.charges, "ptAll"));
             const mapValue = partyCharge.get(chargeGroup);
