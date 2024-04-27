@@ -45,7 +45,7 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <link rel="manifest" href="/chargers/manifest.json" />
                 <title>FGO NP Chargers</title>
             </Head>
-            <Tabs id="region-tabs" activeKey={region} onSelect={(k) => setRegion(k as unknown as "NA" | "JP")}>
+            <Tabs id="region-tabs" activeKey={""} onSelect={(k) => setRegion(k as unknown as "NA" | "JP")}>
                 <Tab title="🇯🇵" eventKey="JP" tabClassName={region === "JP" ? "active-region" : ""} />
                 <Tab title="🇺🇸" eventKey="NA" tabClassName={region === "NA" ? "active-region" : ""} />
             </Tabs>
