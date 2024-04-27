@@ -23,22 +23,17 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     const [region, setRegion] = useState<"JP" | "CN" | "TW" | "KR" | "NA">("NA");
 
     const chargersProps = props.pageProps.chargers;
-    const [tabActiveKey, setKey] = useState<"self-charge-aoe"|"self-charge-st"|"self-charge-support"|"targeted-party-chargers"|"notes"|"region-NA"|"region-JP">("self-charge-aoe");
+    const [tabActiveKey, setKey] = useState<
+        "self-charge-aoe" | "self-charge-st" | "self-charge-support" | "targeted-party-chargers" | "notes"
+    >("self-charge-aoe");
+    const [regionTabActiveKey, setregionTabActiveKey] = useState<"region-NA" | "region-JP">("region-NA");
 
     if (chargersProps === undefined) return null;
 
     let { chargers, selfChargeAOE, selfChargeST, selfChargeSupport, partyCharge, allyCharge }: CategorizedChargeInfo =
         chargersProps[region];
-    
-    if (chargers === undefined) return null;
 
-    const tabSelector = (selectedKey: "self-charge-aoe"|"self-charge-st"|"self-charge-support"|"targeted-party-chargers"|"notes"|"NA"|"JP") => {
-        if (selectedKey === "NA" || selectedKey === "JP") {
-            setRegion(selectedKey);
-        } else {
-            setKey(selectedKey)
-        }
-    };
+    if (chargers === undefined) return null;
 
     return (
         <>
@@ -51,7 +46,24 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <link rel="manifest" href="/chargers/manifest.json" />
                 <title>FGO NP Chargers</title>
             </Head>
-            <Tabs id="charger-tabs" activeKey={tabActiveKey} onSelect={(k) => tabSelector(k as unknown as "self-charge-aoe" | "self-charge-st" | "self-charge-support" | "targeted-party-chargers" | "notes" | "NA" | "JP")}>
+            <Tabs id="region-tabs" activeKey={tabActiveKey} onSelect={(k) => setRegion(k as unknown as "NA" | "JP")}>
+                <Tab title="🇯🇵" eventKey="JP" tabClassName={region === "JP" ? "active-region" : ""} />
+                <Tab title="🇺🇸" eventKey="NA" tabClassName={region === "NA" ? "active-region" : ""} />
+            </Tabs>
+            <Tabs
+                id="charger-tabs"
+                activeKey={tabActiveKey}
+                onSelect={(k) =>
+                    setKey(
+                        k as unknown as
+                            | "self-charge-aoe"
+                            | "self-charge-st"
+                            | "self-charge-support"
+                            | "targeted-party-chargers"
+                            | "notes"
+                    )
+                }
+            >
                 <Tab title="Self Charge AOE" eventKey="self-charge-aoe">
                     <ChargerTable chargeInfos={selfChargeAOE} />
                 </Tab>
@@ -89,8 +101,6 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                         </p>
                     </Alert>
                 </Tab>
-                <Tab title="🇯🇵" eventKey="JP" tabClassName={(region === "JP" ? "active-region" : "")} />
-                <Tab title="🇺🇸" eventKey="NA" tabClassName={(region === "NA" ? "active-region" : "")} />
             </Tabs>
         </>
     );
