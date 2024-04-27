@@ -9,18 +9,18 @@ import getChargers, { CategorizedChargeInfo } from "../getters/getChargers";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    return { props:
-        { chargers: 
-            {
+    return {
+        props: {
+            chargers: {
                 JP: await getChargers("JP"),
                 NA: await getChargers("NA"),
-            }
-        }
+            },
+        },
     };
 };
 
 const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const [region, setRegion] = useState<"JP"|"CN"|"TW"|"KR"|"NA">("NA");
+    const [region, setRegion] = useState<"JP" | "CN" | "TW" | "KR" | "NA">("NA");
 
     const chargersProps = props.pageProps.chargers;
     const [tabActiveKey, setKey] = useState<"self-charge-aoe"|"self-charge-st"|"self-charge-support"|"targeted-party-chargers"|"notes"|"region-NA"|"region-JP">("self-charge-aoe");

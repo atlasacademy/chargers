@@ -32,7 +32,10 @@ export interface CategorizedChargeInfo {
 }
 
 const chargeSum = (charges: Charge[], chargeType: "self" | "ptAll" | "ptOne") => {
-    return charges.reduce((acc, charge) => (acc += (charge.type === "ptOther" ? "ptAll" : charge.type) === chargeType ? charge.value : 0), 0);
+    return charges.reduce(
+        (acc, charge) => (acc += (charge.type === "ptOther" ? "ptAll" : charge.type) === chargeType ? charge.value : 0),
+        0
+    );
 };
 
 const getChargeGroup = (chargeValue: number): number => {
@@ -67,9 +70,13 @@ const getCharges = (_skills: Skill.Skill[]): Charge[] => {
     return charges;
 };
 
-const getServants = async (region: "JP"|"CN"|"TW"|"KR"|"NA" = "JP"): Promise<Servant.Servant[]> => {
+const getServants = async (region: "JP" | "CN" | "TW" | "KR" | "NA" = "JP"): Promise<Servant.Servant[]> => {
     const servants: Servant.Servant[] = await (
-        await fetch(`https://api.atlasacademy.io/export/${region}/${region === "JP" ? "nice_servant_lang_en" : "nice_servant"}.json`)
+        await fetch(
+            `https://api.atlasacademy.io/export/${region}/${
+                region === "JP" ? "nice_servant_lang_en" : "nice_servant"
+            }.json`
+        )
     ).json();
 
     servants.find((serv) => serv.id === 1000900)!.noblePhantasms = []; // Kingprotea
@@ -192,7 +199,9 @@ const getSupportChargers = (chargers: Charger[]) => {
     return { partyCharge: mapToChargeInfo(partyCharge), allyCharge: mapToChargeInfo(allyCharge) };
 };
 
-const getChargers: (region?: "JP"|"CN"|"TW"|"KR"|"NA") => Promise<CategorizedChargeInfo> = async (region: "JP"|"CN"|"TW"|"KR"|"NA" = "JP") => {
+const getChargers: (region?: "JP" | "CN" | "TW" | "KR" | "NA") => Promise<CategorizedChargeInfo> = async (
+    region: "JP" | "CN" | "TW" | "KR" | "NA" = "JP"
+) => {
     const servants = await getServants(region);
     const chargers = servants.map((servant) => {
         return {
@@ -211,7 +220,7 @@ const getChargers: (region?: "JP"|"CN"|"TW"|"KR"|"NA") => Promise<CategorizedCha
                       func.funcType.includes("damageNp")
                   )[0].funcTargetType
                 : "",
-            region
+            region,
         };
     });
     const { selfChargeAOE, selfChargeST, selfChargeSupport } = getSelfChargers(chargers);
