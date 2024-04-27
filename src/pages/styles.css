@@ -56,6 +56,13 @@ img {
     font-size: xx-large;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
+/* Region and Chargers Tabs containers begin to intersect */
+@media (min-width: 1141.98px) {
+    ul#region-tabs {
+        position: absolute;
+        right: 0;
+    }
+}
 /* Monitors only */
 @media (min-width: 991.98px) {
     div#__next {
