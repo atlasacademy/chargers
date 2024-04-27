@@ -81,6 +81,15 @@ const getServants = async (region: "JP" | "CN" | "TW" | "KR" | "NA" = "JP"): Pro
 
     servants.find((serv) => serv.id === 1000900)!.noblePhantasms = []; // Kingprotea
 
+    const superAoko = servants.find((serv) => serv.id === 2501500);
+
+    if (superAoko !== undefined) {
+        superAoko.extraAssets = {
+            ...(superAoko.extraAssets ?? {}),
+            faces: { ascension: { 1: "https://static.atlasacademy.io/JP/Faces/f_25014000.png" } },
+        };
+    }
+
     const melu = { ...servants.find((serv) => serv.id === 304800)! };
     const [meluNpST, meluNpAOE] = melu.noblePhantasms;
     const [meluSkill1, meluSkill2, meluBattery100, meluBattery30] = melu.skills;

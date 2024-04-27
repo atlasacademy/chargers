@@ -75,6 +75,12 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                             available. If starting in asc1, Melusine can use her 100% battery and change ascensions to
                             asc3, which functionally means the 100% charge is on asc3.
                         </p>
+                        <Alert.Heading>Super Aoko</Alert.Heading>
+                        <hr />
+                        <p>
+                            Super Aoko has 100% charge. However, she doesn&apos;t have a bordered thumbnail in the game,
+                            so normal Aoko&apos;s face is used instead.
+                        </p>
                         <Alert.Heading>Charge-per-turn buffs and trait charges</Alert.Heading>
                         <hr />
                         <p>
