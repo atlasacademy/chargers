@@ -24,11 +24,28 @@ a {
     width: 160px;
     margin-bottom: 1px;
 }
-.active-region {
-    border: 2px solid gainsboro !important;
-}
 div#__next {
     background-color: #323539;
+}
+.region-switch .form-switch {
+    margin: 3px 0px 0 15px;
+}
+.region-switch > p {
+    position: relative;
+    top: 2px;
+}
+input#region-switch.form-check-input {
+    border-color: white;
+}
+input#region-switch.form-check-input:checked {
+    background-color: gainsboro;
+}
+input#region-switch.form-check-input {
+    background-color: gainsboro;
+}
+input#region-switch.form-check-input,
+input#region-switch.form-check-input:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23323539'/%3e%3c/svg%3e");
 }
 #charger-tabs-tabpane-self-charge-aoe > table:nth-child(1) > tbody:nth-child(1) > tr > td:first-child,
 #charger-tabs-tabpane-self-charge-st > table:nth-child(1) > tbody:nth-child(1) > tr > td:first-child {
@@ -56,12 +73,14 @@ img {
     font-size: xx-large;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-/* Region and Chargers Tabs containers begin to intersect */
-@media (min-width: 1141.98px) {
-    ul#region-tabs {
+/* Chargers Tabs and Region Switch begin to intersect */
+@media (min-width: 911.98px) {
+    .region-switch {
         position: absolute;
         right: 0;
         z-index: 1;
+        padding: 6px;
+        font-size: larger;
     }
 }
 /* Monitors only */

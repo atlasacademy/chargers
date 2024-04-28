@@ -1,7 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import React, { useState } from "react";
-import { Alert, Col, Container, Nav, Navbar, Row, Tab, Tabs } from "react-bootstrap";
+import React, { ChangeEvent, useState } from "react";
+import { Alert, Col, Container, Nav, Navbar, Row, Tab, Tabs, Form } from "react-bootstrap";
 
 import { ChargerTable } from "../Components/Chargers";
 import getChargers, { CategorizedChargeInfo } from "../getters/getChargers";
@@ -45,10 +45,16 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <link rel="manifest" href="/chargers/manifest.json" />
                 <title>FGO NP Chargers</title>
             </Head>
-            <Tabs id="region-tabs" activeKey={""} onSelect={(k) => setRegion(k as unknown as "NA" | "JP")}>
-                <Tab title="🇯🇵" eventKey="JP" tabClassName={region === "JP" ? "active-region" : ""} />
-                <Tab title="🇺🇸" eventKey="NA" tabClassName={region === "NA" ? "active-region" : ""} />
-            </Tabs>
+            <div id="region-switch-container" className="d-flex region-switch">
+                <p>🇺🇸</p>
+                <Form.Check
+                    type="switch"
+                    id="region-switch"
+                    aria-label="region-switch"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setRegion(e.target.checked ? "JP" : "NA")}
+                ></Form.Check>
+                <p>🇯🇵</p>
+            </div>
             <Tabs
                 id="charger-tabs"
                 activeKey={tabActiveKey}
