@@ -1,7 +1,7 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import React, { ChangeEvent, useState } from "react";
-import { Alert, Col, Container, Nav, Navbar, Row, Tab, Tabs, Form } from "react-bootstrap";
+import { Alert, Form, Tab, Tabs } from "react-bootstrap";
 
 import { ChargerTable } from "../Components/Chargers";
 import getChargers, { CategorizedChargeInfo } from "../getters/getChargers";
@@ -25,6 +25,14 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
     const [tabActiveKey, setKey] = useState<
         "self-charge-aoe" | "self-charge-st" | "self-charge-support" | "targeted-party-chargers" | "notes"
     >("self-charge-aoe");
+
+    const selectTab = (value: number) => {
+        const tab = (
+            ["self-charge-aoe", "self-charge-st", "self-charge-support", "targeted-party-chargers", "notes"] as const
+        )[value];
+
+        setKey(tab);
+    };
 
     if (chargersProps === undefined) return null;
 
@@ -54,6 +62,17 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 ></Form.Check>
                 <p>🇯🇵</p>
             </div>
+            <Form.Select
+                aria-label="Charger tab select menu"
+                onChange={(e) => selectTab(+e.target.value)}
+                id="charger-select"
+            >
+                <option value="0">Self Charge AOE</option>
+                <option value="1">Self Charge ST</option>
+                <option value="2">Self Charge Support NP</option>
+                <option value="3">Targeted &amp; Party Chargers</option>
+                <option value="4">Notes</option>
+            </Form.Select>
             <Tabs
                 id="charger-tabs"
                 activeKey={tabActiveKey}
