@@ -20,9 +20,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
-    const [region, setRegion] = useState<"JP" | "CN" | "TW" | "KR" | "NA">("NA");
-
     const chargersProps = props.pageProps.chargers;
+    const [region, setRegion] = useState<"JP" | "CN" | "TW" | "KR" | "NA">("NA");
     const [tabActiveKey, setKey] = useState<
         "self-charge-aoe" | "self-charge-st" | "self-charge-support" | "targeted-party-chargers" | "notes"
     >("self-charge-aoe");
