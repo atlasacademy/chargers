@@ -16,7 +16,10 @@ export const ChargerTable = ({ chargeInfos }: { chargeInfos?: ChargeInfo[] }) =>
                         </td>
                         <td className="p-0">
                             {chargers.map((charger) => (
-                                <a key={charger.id} href={`https://apps.atlasacademy.io/db/${charger.region}/servant/${charger.id}`}>
+                                <a
+                                    key={charger.id}
+                                    href={`https://apps.atlasacademy.io/db/${charger.region}/servant/${charger.id}`}
+                                >
                                     <img
                                         src={charger.img}
                                         alt={charger.name}
