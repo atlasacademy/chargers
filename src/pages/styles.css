@@ -30,9 +30,12 @@ div#__next {
 .region-switch .form-switch {
     margin: 3px 0px 0 15px;
 }
-.region-switch > p {
+.region-icon {
     position: relative;
-    top: 2px;
+    margin: auto;
+}
+.region-icon-fallback {
+    color: gainsboro;
 }
 input#region-switch.form-check-input {
     border-color: white;
