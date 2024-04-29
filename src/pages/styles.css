@@ -27,8 +27,9 @@ a {
 div#__next {
     background-color: #323539;
 }
-.region-switch .form-switch {
-    margin: 3px 0px 0 15px;
+.region-switch > .form-switch {
+    position: relative;
+    margin: 0 0 0 12px;
 }
 .region-icon {
     position: relative;
