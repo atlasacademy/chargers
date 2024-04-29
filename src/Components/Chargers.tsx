@@ -11,8 +11,8 @@ export const ChargerTable = ({ chargeInfos }: { chargeInfos?: ChargeInfo[] }) =>
             <tbody>
                 {chargeInfos.map(({ chargeValue, chargeText, chargers }) => (
                     <tr key={chargeValue} className="border border-white">
-                        <td className="align-middle text-center">
-                            <b className="sticky-top h1">{chargeText}</b>
+                        <td className="text-center">
+                            <b className="h1">{chargeText}</b>
                         </td>
                         <td className="p-0">
                             {chargers.map((charger) => (

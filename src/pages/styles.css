@@ -84,6 +84,21 @@ img {
     font-size: xx-large;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
+td {
+    vertical-align: middle;
+}
+td * {
+    transition: 0.4s;
+}
+@media (max-height: 568px) {
+    td {
+        vertical-align: top;
+    }
+    td b.h1 {
+        top: 0;
+        position: sticky;
+    }
+}
 /* Chargers Tabs and Region Switch begin to intersect */
 @media (max-width: 911.98px) {
     #charger-tabs {
