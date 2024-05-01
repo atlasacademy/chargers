@@ -1,7 +1,12 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 
-import { ChargeInfo } from "../getters/getChargers";
+import { ChargeInfo, Charger } from "../getters/getChargers";
+
+const handleError = (e: React.SyntheticEvent<HTMLImageElement, Event>, charger: Charger) => {
+    charger.img = charger.img.replace(/(?<=static\.atlasacademy\.io\/)..(?=\/)/, "JP");
+    (e.target as HTMLImageElement).src = charger.img;
+};
 
 export const ChargerTable = ({ chargeInfos }: { chargeInfos?: ChargeInfo[] }) => {
     if (chargeInfos === undefined) return null;
@@ -26,6 +31,7 @@ export const ChargerTable = ({ chargeInfos }: { chargeInfos?: ChargeInfo[] }) =>
                                         title={charger.name}
                                         width={142}
                                         height={155}
+                                        onError={(e) => handleError(e, charger)}
                                     />
                                 </a>
                             ))}
