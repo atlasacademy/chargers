@@ -1,9 +1,10 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { Alert, Form, Tab, Tabs } from "react-bootstrap";
 
 import { ChargerTable } from "../Components/Chargers";
+import { SvgFlags, SvgFlagsContext } from "../Components/SvgFlags";
 import getChargers, { CategorizedChargeInfo } from "../getters/getChargers";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,9 +14,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
         props: {
             chargers: {
                 JP: await getChargers("JP"),
-                CN: await getChargers("CN"),
-                KR: await getChargers("KR"),
-                TW: await getChargers("TW"),
                 CN: await getChargers("CN"),
                 KR: await getChargers("KR"),
                 TW: await getChargers("TW"),
@@ -58,15 +56,10 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <link rel="manifest" href="/chargers/manifest.json" />
                 <title>FGO NP Chargers</title>
             </Head>
-            <div id="region-switch-container" className="d-flex region-switch">
-                {svgFlagUS}
-                <Form.Check
-                    type="switch"
-                    id="region-switch"
-                    aria-label="region-switch"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => setRegion(e.target.checked ? "JP" : "NA")}
-                ></Form.Check>
-                {svgFlagJP}
+            <div id="region-flags-container" className="region-flags-container">
+                <SvgFlagsContext.Provider value={region}>
+                    <SvgFlags regionSetter={setRegion}></SvgFlags>
+                </SvgFlagsContext.Provider>
             </div>
             <Form.Select
                 aria-label="Charger tab select menu"

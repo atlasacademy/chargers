@@ -27,32 +27,25 @@ a {
 div#__next {
     background-color: #323539;
 }
-.region-switch {
+.region-flags-container {
     width: fit-content;
-}
-.region-switch > .form-switch {
-    position: relative;
-    margin: 0 0 0 12px;
+    background-color: rgba(0.75, 0.75, 0.75, 0.5);
 }
 .region-icon {
     position: relative;
-    margin: auto;
+    margin: 1px 2px 2px 2px;
+    transform: translate(-10%, -10%);
+}
+.region-icon.active-region {
+    outline: 2px solid gainsboro;
+    outline-offset: 4px;
+    border-radius: 1px;
+    transform: scale(1.2);
+    margin: 0 10px 0 0;
+    transition: 0.2s;
 }
 .region-icon-fallback {
     color: gainsboro;
-}
-input#region-switch.form-check-input {
-    border-color: white;
-}
-input#region-switch.form-check-input:checked {
-    background-color: gainsboro;
-}
-input#region-switch.form-check-input {
-    background-color: gainsboro;
-}
-input#region-switch.form-check-input,
-input#region-switch.form-check-input:focus {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23323539'/%3e%3c/svg%3e");
 }
 #charger-select {
     width: fit-content;
@@ -117,7 +110,7 @@ td * {
     }
 }
 @media (min-width: 341.98px) {
-    .region-switch {
+    .region-flags-container {
         position: absolute;
         right: 0;
         z-index: 1;
