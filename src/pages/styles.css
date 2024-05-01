@@ -94,23 +94,23 @@ td * {
     }
 }
 /* Chargers Tabs and Region Switch begin to intersect */
-@media (max-width: 911.98px) {
+@media (max-width: 1044px) {
     #charger-tabs {
         display: none;
     }
 }
-@media (min-width: 911.98px) {
+@media (min-width: 1045px) {
     #charger-select {
         display: none;
     }
 }
-/* Chargers Select and Region Switch begin to intersect */
-@media (max-width: 341.98px) {
+/* Chargers Select and Region Dropdown begin to intersect */
+@media (max-width: 445px) {
     #charger-tabs {
         display: none;
     }
 }
-@media (min-width: 341.98px) {
+@media (min-width: 446px) {
     .region-flags-container {
         position: absolute;
         right: 0;
