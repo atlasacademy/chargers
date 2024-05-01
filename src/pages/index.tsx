@@ -13,6 +13,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
         props: {
             chargers: {
                 JP: await getChargers("JP"),
+                CN: await getChargers("CN"),
+                KR: await getChargers("KR"),
+                TW: await getChargers("TW"),
+                CN: await getChargers("CN"),
+                KR: await getChargers("KR"),
+                TW: await getChargers("TW"),
                 NA: await getChargers("NA"),
             },
         },
