@@ -137,14 +137,6 @@ const getServants = async (region: "JP" | "CN" | "TW" | "KR" | "NA" = "JP"): Pro
 
     servants.splice(servants.indexOf(servants.find((serv) => serv.id === mash.id)!), 1, mashOG, mashOrtenaus);
 
-    const iori = { ...servants.find((serv) => serv.id === 106000)! };
-
-    if (iori !== undefined) {
-        iori.noblePhantasms = iori.noblePhantasms?.filter?.((np) => np.id === 106001) ?? iori.noblePhantasms;
-
-        servants.splice(servants.indexOf(servants.find((serv) => serv.id === iori.id)!), 1, iori);
-    }
-
     return servants;
 };
 
