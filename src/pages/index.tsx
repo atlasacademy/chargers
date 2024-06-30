@@ -38,12 +38,12 @@ const App = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
         setKey(tab);
     };
 
-    if (chargersProps === undefined) return null;
+    if (chargersProps === undefined) return <p>There was a problem loading props for the page.</p>;
 
     let { chargers, selfChargeAOE, selfChargeST, selfChargeSupport, partyCharge, allyCharge }: CategorizedChargeInfo =
         chargersProps[region];
 
-    if (chargers === undefined) return null;
+    if (chargers === undefined) return <p>There was a problem loading chargers.</p>;
 
     return (
         <>
