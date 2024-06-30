@@ -137,7 +137,16 @@ const getServants = async (region: "JP" | "CN" | "TW" | "KR" | "NA" = "JP"): Pro
 
     servants.splice(servants.indexOf(servants.find((serv) => serv.id === mash.id)!), 1, mashOG, mashOrtenaus);
 
-    return servants;
+    return servants.map((servant) => {
+        let noblePhantasms = servant.noblePhantasms
+            .map((np) => ({
+                ...np,
+                functions: np.functions.filter((func) => func.funcType.includes("damageNp")),
+            }))
+            .filter((np) => np.functions.length > 0);
+
+        return { ...servant, noblePhantasms };
+    });
 };
 
 const getSelfChargers = (chargers: Charger[]) => {
@@ -222,13 +231,7 @@ const getChargers: (region?: "JP" | "CN" | "TW" | "KR" | "NA") => Promise<Catego
             name: `${servant.name ?? ""} (${
                 servant.className ? `${servant.className[0].toUpperCase()}${servant.className.slice(1)}` : ""
             })`,
-            np: servant.noblePhantasms[servant.noblePhantasms.length - 1]?.functions.some((func) =>
-                func.funcType.includes("damageNp")
-            )
-                ? servant.noblePhantasms[servant.noblePhantasms.length - 1]?.functions.filter((func) =>
-                      func.funcType.includes("damageNp")
-                  )[0].funcTargetType
-                : "",
+            np: servant.noblePhantasms[0].functions[0].funcTargetType,
             region,
         };
     });
